@@ -1,18 +1,7 @@
 <?php
 session_start();
-// Database connection settings
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "turfdb";
-
-// Create database connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed. Please try again later.");
-}
+// Database connection
+include('includes/dbconnection.php');
 
 // Default query to fetch all bookings
 $sql = "SELECT * FROM bookings";
@@ -27,15 +16,20 @@ if (isset($_POST['filter_date']) && !empty($_POST['filter_date'])) {
 $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Bookings</title>
-    <link rel="stylesheet" href="allbooking.css">
+    <link rel="stylesheet" href="assets/css/allbooking.css">
 </head>
+
 <body>
     <div class="header">
-        <img src="images/turfease logo.png" class="logo">
+        <img src="assets/img/turfease logo.png" class="logo" alt="TurfEase Logo">
         <ul>
-            <li><a href="admin_home.php">Home</a></li>                                                                            
+            <li><a href="admin_home.php">Home</a></li>
         </ul>
     </div>
     <div class="booking-details-page">
@@ -44,7 +38,8 @@ $result = $conn->query($sql);
         <!-- Date Filter Form -->
         <form method="POST" action="allbookings.php" class="filter-form">
             <label for="filter_date">Filter by Date:</label>
-            <input type="date" name="filter_date" id="filter_date" value="<?php echo htmlspecialchars($filter_date); ?>">
+            <input type="date" name="filter_date" id="filter_date"
+                value="<?php echo htmlspecialchars($filter_date); ?>">
             <button type="submit">Filter</button>
             <button type="submit" name="reset_filter">Reset</button>
         </form>
@@ -85,4 +80,5 @@ $result = $conn->query($sql);
         </table>
     </div>
 </body>
+
 </html>
