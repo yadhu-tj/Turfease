@@ -1,7 +1,7 @@
 <?php
 // Start the session
 session_start();
-include('dbconnection.php');
+include('includes/dbconnection.php');
 
 // Check if the user is logged in (email should be in session)
 if (!isset($_SESSION['email'])) {
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $errors[] = "Error preparing SQL statement.";
                 break;
             }
-            $stmt->bind_param("sssssss", $email, $sport, $court, $appointment_date, $slot, $payment_method,$amount);
+            $stmt->bind_param("sssssss", $email, $sport, $court, $appointment_date, $slot, $payment_method, $amount);
             if (!$stmt->execute()) {
                 $errors[] = "Error executing SQL statement.";
                 break;
@@ -70,12 +70,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Confirmation</title>
-    <link rel="stylesheet" href="payment.css">
+    <link rel="stylesheet" href="assets/css/payment.css">
 </head>
 
 <body>
     <div class="header">
-        <img src="images/turfease logo.png" class="logo">
+        <img src="assets/img/turfease logo.png" class="logo">
     </div>
     <h2>Booking Details</h2>
     <div class="confirm_page">
