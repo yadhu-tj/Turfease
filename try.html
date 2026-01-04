@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Turf Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .time-slot-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .time-slot {
+            flex: 1 1 calc(33.333% - 10px);
+            text-align: center;
+            padding: 15px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s ease;
+        }
+        .time-slot:hover {
+            background-color: #218838;
+        }
+        .time-slot.selected {
+            background-color: #007bff;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Book Your Football Turf</h1>
+        <form action="/submit-booking" method="POST">
+            <!-- Personal Details -->
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+            <label for="contact">Contact Number</label>
+            <input type="tel" id="contact" name="contact" placeholder="Enter your phone number" required>
+
+            <label for="date">Booking Date</label>
+            <input type="date" id="date" name="date" required>
+
+            <!-- Time Slot Selection -->
+            <label>Available Time Slots</label>
+            <div class="time-slot-container" id="timeSlotContainer">
+                <div class="time-slot" data-time="6 AM - 7 AM">6 AM - 7 AM</div>
+                <div class="time-slot" data-time="7 AM - 8 AM">7 AM - 8 AM</div>
+                <div class="time-slot" data-time="8 AM - 9 AM">8 AM - 9 AM</div>
+                <div class="time-slot" data-time="5 PM - 6 PM">5 PM - 6 PM</div>
+                <div class="time-slot" data-time="6 PM - 7 PM">6 PM - 7 PM</div>
+                <div class="time-slot" data-time="7 PM - 8 PM">7 PM - 8 PM</div>
+            </div>
+
+            <!-- Hidden Input to Store Selected Time Slots -->
+            <input type="hidden" id="selectedTimes" name="time_slots" required>
+
+            <!-- Special Requests -->
+            <label for="requests">Special Requests</label>
+            <input type="text" id="requests" name="requests" placeholder="Any additional requests (optional)">
+
+            <!-- Submit Button -->
+            <button type="submit">Book Now</button>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript to handle multiple time slot selection
+        const timeSlots = document.querySelectorAll('.time-slot');
+        const hiddenInput = document.getElementById('selectedTimes');
+
+        let selectedSlots = [];
+
+        timeSlots.forEach(slot => {
+            slot.addEventListener('click', () => {
+                const time = slot.getAttribute('data-time');
+
+                // Toggle selection
+                if (selectedSlots.includes(time)) {
+                    // Remove time if already selected
+                    selectedSlots = selectedSlots.filter(t => t !== time);
+                    slot.classList.remove('selected');
+                } else {
+                    // Add time if not selected
+                    selectedSlots.push(time);
+                    slot.classList.add('selected');
+                }
+
+                // Update hidden input with selected times
+                hiddenInput.value = selectedSlots.join(', ');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Booking</title>
+</head>
+<body>
+    <h1>Confirm Your Booking</h1>
+    <p><strong>Sport:</strong> <span id="sportDetails"></span></p>
+    <p><strong>Court:</strong> <span id="courtDetails"></span></p>
+    <p><strong>Date:</strong> <span id="dateDetails"></span></p>
+    <p><strong>Time:</strong> <span id="timeDetails"></span></p>
+
+    <label for="paymentMethod">Payment Method:</label>
+    <select id="paymentMethod">
+        <option value="credit_card">Credit Card</option>
+        <option value="paypal">PayPal</option>
+        <option value="bank_transfer">Bank Transfer</option>
+    </select>
+
+    <button id="confirmBookingButton">Confirm Booking</button>
+
+    <script>
+        // Retrieve the booking details from sessionStorage
+        const selectedSport = sessionStorage.getItem('selectedSport');
+        const selectedCourt = sessionStorage.getItem('selectedCourt');
+        const selectedDate = sessionStorage.getItem('selectedDate');
+        const selectedTimes = sessionStorage.getItem('selectedTimes');
+
+        // Display the booking details
+        document.getElementById('sportDetails').textContent = selectedSport;
+        document.getElementById('courtDetails').textContent = selectedCourt;
+        document.getElementById('dateDetails').textContent = selectedDate;
+        document.getElementById('timeDetails').textContent = selectedTimes;
+
+        // Confirm booking and submit to the database
+        document.getElementById('confirmBookingButton').addEventListener('click', function () {
+            const paymentMethod = document.getElementById('paymentMethod').value;
+
+            // Prepare data to send to the backend (e.g., via AJAX or Fetch)
+            const bookingData = {
+                sport: selectedSport,
+                court: selectedCourt,
+                date: selectedDate,
+                time: selectedTimes,
+                paymentMethod: paymentMethod
+            };
+
+            // Send the booking data to the server (using Fetch API for example)
+            fetch('confirm_booking.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(bookingData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Booking confirmed! You will be redirected to the payment page.');
+                    // Redirect to the payment gateway (or payment confirmation page)
+                    window.location.href = 'payment_gateway.html';  // Update with actual payment gateway URL
+                } else {
+                    alert('Error confirming booking. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error confirming booking. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>

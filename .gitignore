@@ -1,0 +1,15 @@
+# PHP
+vendor/
+composer.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.vscode/
+.idea/
+
+# Images (optional, but good to keep smaller if possible)
+# images/

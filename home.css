@@ -1,0 +1,207 @@
+/* General Styles */
+body {
+    font-family: Berlin Sans FB;
+    background: #151515;
+    margin: 0;
+    width: 100%;
+    height: auto;
+}
+
+/* Logo Styles */
+.logo {
+    width: 200px;
+    height: 150px;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+/* Header Styles */
+.header {
+    position: fixed;
+    background: #151515;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+    top: 0;
+    height: 15%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+}
+
+.header ul li {
+    font-family: Berlin Sans FB;
+    list-style: none;
+    display: inline-block;
+    margin: 0px 130px;
+    margin-left: -20px ;
+    position: relative;
+}
+
+.header ul li a {
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: larger;
+    color: whitesmoke;
+}
+
+.header ul li::after {
+    content: '';
+    height: 3px;
+    width: 0%;
+    background: #009688;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+    z-index: 1000;
+}
+
+.header ul li:hover::after {
+    width: 100%;
+}
+
+.content {
+    width: 100%;
+    position: fixed;
+    top: 200px;
+    left: 150px;
+    text-align: left;
+    color: whitesmoke;
+}
+
+.content h1 {
+    font-family: Berlin system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+    font-size: 35px;
+}
+
+.content p {
+    font-family: Berlin system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 20px;
+    margin: 20px auto;
+    font-weight: bold;
+    line-height: 25px;
+}
+
+.content button {
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: darkcyan;
+    color: whitesmoke;
+    font-family: Segoe UI;
+    font-weight: 800;
+}
+
+.content a {
+    color: whitesmoke;
+    font-weight: 800;
+}
+
+/* Slideshow Styles */
+.slideshow {
+    position: absolute;
+    width: 30%;
+    margin-left: 60%;
+    margin-top: 130px;
+}
+
+.slideshow img {
+    width: 450px;
+    height: 450px;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+
+.slideshow img.active {
+    opacity: 1;
+}
+
+/* Sidebar Styles */
+#sidebar {
+    position: fixed;
+    right: -300px; /* Start off-screen to the right */
+    top: 0;
+    width: 300px;
+    height: 100%;
+    background: #151515;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    transition: right 0.3s ease; /* Smooth transition */
+    overflow-y: auto; /* Ensure scrollbar appears if content overflows */
+}
+
+/* Sidebar visible state */
+#sidebar.show {
+    right: 0; /* Slide in the sidebar */
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.user-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.sidebar-content a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    border-bottom: 1px solid #ccc;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar-content a:hover {
+    background-color: #009688;
+    color: #fff;
+}
+
+.content {
+    margin-right: 320px; /* Adjust to ensure main content is not covered by the sidebar */
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px; /* Adjust this value to move the icon further right */
+    background-color: #111;
+    color: white;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1000;
+    padding: 10px;
+    border-radius: 5px;
+    transition: right 0.3s ease, transform 0.3s ease; /* Add transition for rotation */
+}
+
+.sidebar-toggle.move-left {
+    right: 320px; /* Move the toggle button left */
+    transition: right 0.3s ease, transform 0.3s ease; /* Add transition for rotation */
+    transform: rotate(360deg); /* Rotate the button 360 degrees */
+}
+
+.sidebar-toggle:hover {
+    background-color: #444;
+}
+
+/* Responsive Design */
+@media screen and (max-height: 450px) {
+    .sidebar-content a {
+        font-size: 16px;
+    }
+}
