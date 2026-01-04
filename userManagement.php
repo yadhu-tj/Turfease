@@ -1,29 +1,19 @@
 <?php
 session_start();
-// Database connection settings
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "turfdb";
-
-// Create database connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed. Please try again later.");
-}
+// Database connection
+include('includes/dbconnection.php');
 
 $sql = "SELECT * FROM signup WHERE role!='admin'";
 $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management</title>
-    <link rel="stylesheet" href="userManagement.css">
+    <link rel="stylesheet" href="assets/css/userManagement.css">
     <style>
         /* Optional styles for modal */
         .modal {
@@ -38,6 +28,7 @@ $result = $conn->query($sql);
             justify-content: center;
             align-items: center;
         }
+
         .modal-content {
             background: white;
             padding: 20px;
@@ -45,6 +36,7 @@ $result = $conn->query($sql);
             border-radius: 5px;
             width: 300px;
         }
+
         .modal button {
             margin: 10px;
             padding: 10px;
@@ -52,9 +44,10 @@ $result = $conn->query($sql);
         }
     </style>
 </head>
+
 <body>
     <div class="header">
-        <img src="images/turfease logo.png" class="logo">
+        <img src="assets/img/turfease logo.png" class="logo" alt="TurfEase Logo">
     </div>
     <div class="user-details-page">
         <h2>User Details</h2>
@@ -147,6 +140,7 @@ $result = $conn->query($sql);
         });
     </script>
 </body>
+
 </html>
 <?php
 $conn->close();
