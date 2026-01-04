@@ -14,11 +14,11 @@ $userName = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
 <html>
 <head>
     <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="home.css">  
+    <link rel="stylesheet" type="text/css" href="assets/css/home.css">  
 </head>
 <body>
     <div class="header">
-        <img src="images/turfease logo.png" class="logo">
+        <img src="assets/img/turfease logo.png" class="logo">
         <ul>
             <li><a href="contact.php">Contact us</a></li>
             <li><a href="about.php">About us</a></li>                                                                            
@@ -33,15 +33,15 @@ $userName = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
     </div>
 
     <div class="slideshow">
-        <img id="image1" src="images/messi.png" class="active" alt="Slideshow Image">
-        <img id="image2" src="images/ronaldo.png" alt="Slideshow Image">
-        <img id="image3" src="images/neymar.png" alt="Slideshow Image">
+        <img id="image1" src="assets/img/messi.png" class="active" alt="Slideshow Image">
+        <img id="image2" src="assets/img/ronaldo.png" alt="Slideshow Image">
+        <img id="image3" src="assets/img/neymar.png" alt="Slideshow Image">
     </div> 
 
     <!-- Sidebar Content -->
     <div id="sidebar">
     <div class="sidebar-header">
-        <img src="images/profile2.png" alt="User Icon" class="user-icon">
+        <img src="assets/img/profile2.png" alt="User Icon" class="user-icon">
         <h2><?php echo htmlspecialchars($userName); ?></h2>
     </div>
     <div class="sidebar-content">
@@ -50,6 +50,6 @@ $userName = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
     </div>
 </div>
 
-<script src="home.js"></script>
+<script src="assets/js/home.js"></script>
 </body>
 </html>
