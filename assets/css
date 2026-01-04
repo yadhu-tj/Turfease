@@ -1,0 +1,38 @@
+body
+{
+    background-color: black;
+    align-items: center;
+    font-family: Berlin Sans FB;
+}
+.content
+{
+    width: 40%;
+    align-items: left;
+    margin-left: 100px;
+    margin-top: 250px;
+}
+.content p
+{
+    color: white;
+    font-weight: 400;
+    font-size: larger;
+}
+.logo
+{
+    width: 200px;
+    height: 150px;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+.header
+{
+    position: fixed;
+    background-color: black;
+    top:0;
+    height: 15%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+}
