@@ -7,19 +7,8 @@ if (!isset($_SESSION['email'])) {
     exit;
 }
 
-// Database connection settings
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "turfdb";
-
-// Create database connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed. Please try again later.");
-}
+// Database connection
+include('includes/dbconnection.php');
 
 // Fetch the user's booking details
 $email = $_SESSION['email'];
@@ -33,18 +22,20 @@ $result = $stmt->get_result();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Booking Receipt</title>
-    <link rel="stylesheet" type="text/css" href="bookingdtl.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/bookingdtl.css">
     <style>
-       
+
     </style>
 </head>
+
 <body>
     <div class="header">
-        <img src="images/turfease logo.png" alt="TurfEase Logo">
+        <img src="assets/img/turfease logo.png" alt="TurfEase Logo">
         <ul class="nav-links">
             <li><a href="contact.php">Contact Us</a></li>
             <li><a href="about.php">About Us</a></li>
@@ -78,7 +69,7 @@ $result = $stmt->get_result();
 
     <script>
         document.querySelectorAll('.cancel-btn').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const bookingId = this.getAttribute('data-id');
                 if (confirm("Are you sure you want to cancel this booking?")) {
                     fetch('cancel_booking.php', {
@@ -88,24 +79,25 @@ $result = $stmt->get_result();
                         },
                         body: 'id=' + bookingId
                     })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert(data.message || "Booking successfully canceled.");
-                            location.reload();
-                        } else {
-                            alert(data.error || "An error occurred.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert("An unexpected error occurred.");
-                    });
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert(data.message || "Booking successfully canceled.");
+                                location.reload();
+                            } else {
+                                alert(data.error || "An error occurred.");
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert("An unexpected error occurred.");
+                        });
                 }
             });
         });
     </script>
 </body>
+
 </html>
 <?php
 $stmt->close();
