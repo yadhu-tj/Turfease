@@ -2,19 +2,8 @@
 session_start(); // Start the session to manage user sessions
 $errors = [];
 
-// Database connection settings
-$servername = "localhost";
-$db_username = "root"; // Change to your database username
-$db_password = ""; // Change to your database password
-$dbname = "turfdb"; // Change to your database name
-
-// Create connection
-$conn = new mysqli($servername, $db_username, $db_password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: Please try again later."); // Hide technical details from the user
-}
+// Database connection
+include('includes/dbconnection.php');
 
 // Handle signup
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signup'])) {
@@ -143,23 +132,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
         }
     }
 }
-
-// Close the connection
-$conn->close();
 ?>
 
 <!DOCTYPE html>
-<html>
-<head>
-    <title>index</title>
-    <link rel="stylesheet" href="index.css">
-    <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup Form</title>
-  
+    <title>TurfEase - Welcome</title>
+    <link rel="stylesheet" href="assets/css/index.css">
     <script>
         function validateForm() {
             const username = document.forms["signupForm"]["username"].value;
@@ -217,32 +199,43 @@ $conn->close();
                     currentPopup = document.getElementById(popupId);
                 }, 300); // transition duration
             } else {
-                document.getElementById(popupId).classList.add('show');
-                document.getElementById('background-blur').classList.add('show');
-                currentPopup = document.getElementById(popupId);
+                if (popupId) {
+                    document.getElementById(popupId).classList.add('show');
+                    document.getElementById('background-blur').classList.add('show');
+                    currentPopup = document.getElementById(popupId);
+                } else {
+                    // Close popup
+                    currentPopup.classList.remove('show');
+                    document.getElementById('background-blur').classList.remove('show');
+                    currentPopup = null;
+                }
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Change the height of the second form
-            document.getElementById('popup-2').style.height = '470px';
+            const popup2 = document.getElementById('popup-2');
+            if (popup2) {
+                popup2.style.height = '470px';
+            }
         });
     </script>
-
 </head>
+
 <body>
     <div class="header">
-        <img src="images/turfease logo.png" class="logo">
+        <img src="assets/img/turfease logo.png" class="logo" alt="TurfEase Logo">
     </div>
     <div class="content">
         <h1>Welcome to the ultimate playground for sports enthusiasts!</h1>
-        <ul>Dive into a world where every game is played on the best turf, and your passion for sports can thrive. Let the games begin!</ul>
+        <p>Dive into a world where every game is played on the best turf, and your passion for sports can thrive. Let
+            the games begin!</p>
         <button type="button"><a onclick="showpopup('popup-1')">login/signup</a></button>
     </div>
-    <div id="background-blur" class="background-blur"></div>    
+    <div id="background-blur" class="background-blur"></div>
     <div class="popup" id="popup-1">
         <div class="close-btn" onclick="showpopup()">&times;</div>
-        <img src="images/profile2.png">
+        <img src="assets/img/profile2.png" alt="Profile">
         <h1>LOGIN</h1>
         <ul id="login-error-list" class="error-list"></ul>
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
@@ -256,17 +249,20 @@ $conn->close();
     <div class="popup" id="popup-2">
         <div class="overlay"></div>
         <div class="close-btn" onclick="showpopup()">&times;</div>
-        <img src="images/profile2.png">
+        <img src="assets/img/profile2.png" alt="Profile">
         <h1>SIGNUP</h1>
         <ul id="error-list" class="error-list"></ul> <!-- Error messages will be displayed here -->
-        <form name="signupForm" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" onsubmit="return validateForm()">
+        <form name="signupForm" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post"
+            onsubmit="return validateForm()">
             <input type="text" name="username" class="input-box" placeholder="your name" required>
             <input type="text" name="email" class="input-box" placeholder="your email" required>
             <input type="password" name="password" class="input-box" placeholder="your password" required>
-            <input type="password" name="confirm_password" class="input-box" placeholder="confirm your password" required>
+            <input type="password" name="confirm_password" class="input-box" placeholder="confirm your password"
+                required>
             <button type="submit" name="signup" class="loginbtn">Signup</button>
         </form>
-    </div> 
-    <script src="index.js"></script>
+    </div>
+    <script src="assets/js/index.js"></script>
 </body>
+
 </html>
