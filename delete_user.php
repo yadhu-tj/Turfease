@@ -7,20 +7,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Database connection settings
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "turfdb";
-
-// Create database connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    echo json_encode(['success' => false, 'error' => 'Database connection failed']);
-    exit;
-}
+// Database connection
+include('includes/dbconnection.php');
 
 // Get user ID from request
 $userId = $_POST['id'] ?? null;

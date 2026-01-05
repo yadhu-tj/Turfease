@@ -1,18 +1,7 @@
 <?php
 session_start();
-// Database connection settings
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "turfdb";
-
-// Create database connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed. Please try again later.");
-}
+// Database connection
+include('includes/dbconnection.php');
 
 // Initialize filter date variable
 $filter_date = '';
@@ -31,32 +20,38 @@ $result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <title>All Bookings</title>
-    <link rel="stylesheet" href="paymentdtls.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Details - TurfEase</title>
+    <link rel="stylesheet" href="assets/css/paymentdtls.css">
 </head>
+
 <body>
     <div class="header">
-        <img src="images/turfease logo.png" class="logo">
+        <img src="assets/img/turfease logo.png" class="logo" alt="TurfEase Logo">
         <ul>
-            <li><a href="admin_home.php">Home</a></li>                                                                            
+            <li><a href="admin_home.php">Home</a></li>
         </ul>
     </div>
 
     <!-- Filter form -->
-    
+
 
     <div class="booking-details-page">
         <h2>Your Payment Details</h2>
         <div class="filter-form">
-        <form method="POST" action="paymentdtls.php">
-            <label for="filter_date">Filter by Booking Date:</label>
-            <input type="date" name="filter_date" id="filter_date" value="<?php echo htmlspecialchars($filter_date); ?>">
-            <button type="submit">Filter</button>
-            <!-- Reset Filter Button -->
-            <button type="submit" name="reset_filter" value="true">Reset </button>
-        </form>
-    </div>
+            <form method="POST" action="paymentdtls.php">
+                <label for="filter_date">Filter by Booking Date:</label>
+                <input type="date" name="filter_date" id="filter_date"
+                    value="<?php echo htmlspecialchars($filter_date); ?>">
+                <button type="submit">Filter</button>
+                <!-- Reset Filter Button -->
+                <button type="submit" name="reset_filter" value="true">Reset </button>
+            </form>
+        </div>
         <table class="payment-table">
             <thead>
                 <tr>
@@ -86,4 +81,5 @@ $result = $conn->query($sql);
     </div>
 
 </body>
+
 </html>
