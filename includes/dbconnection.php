@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = ""; // Leave blank if no password is set in XAMPP
+$password = "";
 $dbname = "turfdb";
 
 // Create connection
