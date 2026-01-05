@@ -12,7 +12,7 @@ include('includes/dbconnection.php');
 
 // Fetch the user's booking details
 $email = $_SESSION['email'];
-$stmt = $conn->prepare("SELECT id, appointment_date, slot_tym, court, created_at, payment_method FROM bookings WHERE email = ?");
+$stmt = $conn->prepare("SELECT id, appointment_date, slot_tym, court, created_at, payment_method, amount FROM bookings WHERE email = ?");
 if (!$stmt) {
     die("Error fetching bookings. Please try again later.");
 }
@@ -53,7 +53,7 @@ $result = $stmt->get_result();
                         <p><strong>Date:</strong> <?php echo htmlspecialchars($row['appointment_date']); ?></p>
                         <p><strong>Time Slot:</strong> <?php echo htmlspecialchars($row['slot_tym']); ?></p>
                         <p><strong>Court:</strong> <?php echo htmlspecialchars($row['court']); ?></p>
-                        <p><strong>Amount: </strong> 700</p>
+                        <p><strong>Amount: </strong> ₹<?php echo htmlspecialchars($row['amount']); ?></p>
                         <p><strong>Payment Method:</strong> <?php echo htmlspecialchars($row['payment_method']); ?></p>
                     </div>
                     <div class="actions">

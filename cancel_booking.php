@@ -2,19 +2,8 @@
 // cancel_booking.php
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
-    // Database connection settings
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "turfdb";
-
-    // Create database connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed. Please try again later.");
-    }
+    // Database connection
+    include('includes/dbconnection.php');
 
     $bookingId = $_POST['id'];
 
@@ -30,9 +19,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
         // Move the booking details to the canceled_bookings table
         $insertStmt = $conn->prepare("INSERT INTO canceled_bookings (id, appointment_date, slot_tym, court, created_at, payment_method)
                                      VALUES (?, ?, ?, ?, ?, ?)");
-        $insertStmt->bind_param("isssss", $booking['id'], $booking['appointment_date'], $booking['slot_tym'], 
-                                        $booking['court'], $booking['created_at'], $booking['payment_method']);
-        
+        $insertStmt->bind_param(
+            "isssss",
+            $booking['id'],
+            $booking['appointment_date'],
+            $booking['slot_tym'],
+            $booking['court'],
+            $booking['created_at'],
+            $booking['payment_method']
+        );
+
         if ($insertStmt->execute()) {
             // If insertion is successful, delete the booking from the original table
             $deleteStmt = $conn->prepare("DELETE FROM bookings WHERE id = ?");
