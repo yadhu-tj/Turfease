@@ -9,19 +9,18 @@ if (!isset($_SESSION['message'])) {
 
 $total_price = $_SESSION['total_price'];
 $message = $_SESSION['message'];
-
-unset($_SESSION['message']);
-unset($_SESSION['total_price']);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Receipt</title>
-    <link rel="stylesheet" href="receipt.css">
+    <title>Booking Receipt - TurfEase</title>
+    <link rel="stylesheet" href="assets/css/receipt.css">
 </head>
+
 <body>
     <div class="receipt-container">
         <h1>Booking Confirmation</h1>
@@ -43,4 +42,9 @@ unset($_SESSION['total_price']);
         <button onclick="window.location.href='payment.php'">Proceed to Payment</button>
     </div>
 </body>
+
 </html>
+<?php
+unset($_SESSION['message']);
+unset($_SESSION['total_price']);
+?>
