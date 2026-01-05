@@ -183,7 +183,8 @@ $userName = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
             color: darkcyan;
             border-color: #b8daff;
         }
-        .time-slot.hidden{
+
+        .time-slot.hidden {
             display: none;
         }
     </style>
@@ -191,8 +192,8 @@ $userName = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
 
 <body>
     <div class="header">
-        <img src="images/turfease logo.png" class="logo">
-        <img src="images/profile2.png" alt="User Icon" class="user-icon">
+        <img src="assets/img/turfease logo.png" class="logo" alt="TurfEase Logo">
+        <img src="assets/img/profile2.png" alt="User Icon" class="user-icon">
         <div class="user">
             <h3><?php echo htmlspecialchars($userName); ?></h3>
         </div>
@@ -237,79 +238,79 @@ $userName = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
         </form>
     </div>
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const timeSlots = document.querySelectorAll(".time-slot");
-        const selectedTimeInput = document.getElementById("selectedTime");
-        const appointmentDateInput = document.getElementById("appointment");
+        document.addEventListener("DOMContentLoaded", function () {
+            const timeSlots = document.querySelectorAll(".time-slot");
+            const selectedTimeInput = document.getElementById("selectedTime");
+            const appointmentDateInput = document.getElementById("appointment");
 
-        // Get today's date and current time
-        const now = new Date();
-        const todayDate = now.toISOString().split("T")[0]; // Format as YYYY-MM-DD
-        const currentHour = now.getHours();
-        const currentMinutes = now.getMinutes();
+            // Get today's date and current time
+            const now = new Date();
+            const todayDate = now.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+            const currentHour = now.getHours();
+            const currentMinutes = now.getMinutes();
 
-        // Helper function to parse time string in "6:30 AM - 7:30 AM" format
-        function parseTime(timeText) {
-            const [time, period] = timeText.split(" ");
-            let [hours, minutes] = time.split(":").map(Number);
+            // Helper function to parse time string in "6:30 AM - 7:30 AM" format
+            function parseTime(timeText) {
+                const [time, period] = timeText.split(" ");
+                let [hours, minutes] = time.split(":").map(Number);
 
-            // Convert to 24-hour format
-            if (period === "PM" && hours < 12) {
-                hours += 12;
+                // Convert to 24-hour format
+                if (period === "PM" && hours < 12) {
+                    hours += 12;
+                }
+                if (period === "AM" && hours === 12) {
+                    hours = 0;
+                }
+
+                return { hours, minutes };
             }
-            if (period === "AM" && hours === 12) {
-                hours = 0;
-            }
 
-            return { hours, minutes };
-        }
+            // Filter time slots based on the selected date
+            function filterTimeSlots() {
+                const selectedDate = appointmentDateInput.value;
 
-        // Filter time slots based on the selected date
-        function filterTimeSlots() {
-            const selectedDate = appointmentDateInput.value;
+                timeSlots.forEach(slot => {
+                    const { hours, minutes } = parseTime(slot.dataset.time.split(" - ")[0]);
 
-            timeSlots.forEach(slot => {
-                const { hours, minutes } = parseTime(slot.dataset.time.split(" - ")[0]);
-
-                if (selectedDate === todayDate) {
-                    // Hide past slots for today
-                    if (hours < currentHour || (hours === currentHour && minutes <= currentMinutes)) {
-                        slot.style.display = "none";
+                    if (selectedDate === todayDate) {
+                        // Hide past slots for today
+                        if (hours < currentHour || (hours === currentHour && minutes <= currentMinutes)) {
+                            slot.style.display = "none";
+                        } else {
+                            slot.style.display = "inline-block";
+                        }
                     } else {
+                        // Show all slots for other dates
                         slot.style.display = "inline-block";
                     }
-                } else {
-                    // Show all slots for other dates
-                    slot.style.display = "inline-block";
-                }
-            });
-        }
+                });
+            }
 
-        // Add event listener to update time slots when the date changes
-        appointmentDateInput.addEventListener("change", filterTimeSlots);
+            // Add event listener to update time slots when the date changes
+            appointmentDateInput.addEventListener("change", filterTimeSlots);
 
-        // Initialize the date input with today's date and filter slots
-        appointmentDateInput.min = todayDate; // Prevent selection of past dates
-        appointmentDateInput.value = todayDate; // Default to today
-        filterTimeSlots(); // Initial filter for today's date
+            // Initialize the date input with today's date and filter slots
+            appointmentDateInput.min = todayDate; // Prevent selection of past dates
+            appointmentDateInput.value = todayDate; // Default to today
+            filterTimeSlots(); // Initial filter for today's date
 
-        // Add click event for selecting a time slot
-        timeSlots.forEach(slot => {
-            slot.addEventListener("click", function () {
-                if (this.style.display === "none") return; // Skip hidden slots
+            // Add click event for selecting a time slot
+            timeSlots.forEach(slot => {
+                slot.addEventListener("click", function () {
+                    if (this.style.display === "none") return; // Skip hidden slots
 
-                // Toggle the 'selected' class for the clicked slot
-                this.classList.toggle("selected");
+                    // Toggle the 'selected' class for the clicked slot
+                    this.classList.toggle("selected");
 
-                // Update the hidden input with the selected times
-                const selectedTimes = Array.from(document.querySelectorAll(".time-slot.selected"))
-                    .map(slot => slot.getAttribute("data-time"));
+                    // Update the hidden input with the selected times
+                    const selectedTimes = Array.from(document.querySelectorAll(".time-slot.selected"))
+                        .map(slot => slot.getAttribute("data-time"));
 
-                selectedTimeInput.value = selectedTimes.join(", ");
+                    selectedTimeInput.value = selectedTimes.join(", ");
+                });
             });
         });
-    });
-</script>
+    </script>
 
 </body>
 
